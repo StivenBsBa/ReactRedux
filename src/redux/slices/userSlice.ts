@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
   name: string;
-  age: number;
+  tel: number;
   email: string;
   career: string;
 }
@@ -22,8 +22,11 @@ const usersSlice = createSlice({
     addUser: (state, action: PayloadAction<User>) => {
       state.users.push(action.payload);
     },
+    removeUser: (state, action: PayloadAction<number>) => {
+      state.users = state.users.filter((_, index) => index !== action.payload);
+    },
   },
 });
 
-export const { addUser } = usersSlice.actions;
+export const { addUser, removeUser } = usersSlice.actions;
 export default usersSlice.reducer;

@@ -30,20 +30,20 @@ const UserForm = () => {
 
     const [formData, setFormData] = useState({
         name: "",
-        age: "",
+        tel: "",
         email: "",
         career: "",
     });
 
     const [errors, setErrors] = useState({
         name: "",
-        age: "",
+        tel: "",
         email: "",
         career: "",
     });
 
     const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const validateAge = (age: string) => Number(age) > 0 && Number(age) <= 120;
+    const validateTel = (tel: string) => /^(\+57|57)?\s?3\d{2}[-.\s]?\d{3}[-.\s]?\d{4}$/.test(tel);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -55,10 +55,10 @@ const UserForm = () => {
 
         const newErrors = {
             name: formData.name.trim() ? "" : "Campo obligatorio",
-            age: formData.age.trim()
-                ? validateAge(formData.age)
+            tel: formData.tel.trim()
+                ? validateTel(formData.tel)
                     ? ""
-                    : "Edad inválida (1-120)"
+                    : "Teléfono invalido"
                 : "Campo obligatorio",
             email: formData.email.trim()
                 ? validateEmail(formData.email)
@@ -75,12 +75,12 @@ const UserForm = () => {
 
         dispatch(addUser({
             name: formData.name,
-            age: Number(formData.age),
+            tel: Number(formData.tel),
             email: formData.email,
             career: formData.career,
         }));
 
-        setFormData({ name: "", age: "", email: "", career: "" });
+        setFormData({ name: "", tel: "", email: "", career: "" });
     };
 
     return (
@@ -93,8 +93,8 @@ const UserForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <input type="number" name="age" placeholder="Edad" value={formData.age} onChange={handleChange} />
-                    {errors.age && <span className="error">{errors.age}</span>}
+                    <input type="text" name="tel" placeholder="Telefono" value={formData.tel} onChange={handleChange} />
+                    {errors.tel && <span className="error">{errors.tel}</span>}
                 </div>
 
                 <div className="form-group">
@@ -106,7 +106,7 @@ const UserForm = () => {
                     <select name="career" value={formData.career} onChange={handleChange}>
                         <option value="">Selecciona una profesión</option>
                         {careers.map((prof, index) => (
-                            <option key={index} value={prof}>{prof}</option>
+                            <option key={index} value={prof}> {prof} </option>
                         ))}
                     </select>
                     {errors.career && <span className="error">{errors.career}</span>}
