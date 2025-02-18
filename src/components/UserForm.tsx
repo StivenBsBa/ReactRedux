@@ -24,12 +24,15 @@ const careers = [
     "ESPECIALIZACIÓN EN ALTA GERENCIA",
     "MAESTRÍA EN ESTUDIOS RELIGIOSOS Y TEOLOGÍA VIRTUAL"
 ];
+const gender = ["Masculino", "Femenino", "No binario", "Género fluido", "Prefiero no decirlo"];
+
 
 const UserForm = () => {
     const dispatch = useDispatch<AppDispatch>();
 
     const [formData, setFormData] = useState({
         name: "",
+        gender: "",
         tel: "",
         email: "",
         career: "",
@@ -37,6 +40,7 @@ const UserForm = () => {
 
     const [errors, setErrors] = useState({
         name: "",
+        gender: "",
         tel: "",
         email: "",
         career: "",
@@ -55,6 +59,7 @@ const UserForm = () => {
 
         const newErrors = {
             name: formData.name.trim() ? "" : "Campo obligatorio",
+            gender: formData.gender.trim() ? "" : "Campo obligatorio",
             tel: formData.tel.trim()
                 ? validateTel(formData.tel)
                     ? ""
@@ -75,12 +80,13 @@ const UserForm = () => {
 
         dispatch(addUser({
             name: formData.name,
+            gender: formData.gender,
             tel: Number(formData.tel),
             email: formData.email,
             career: formData.career,
         }));
 
-        setFormData({ name: "", tel: "", email: "", career: "" });
+        setFormData({ name: "", gender: "", tel: "", email: "", career: "" });
     };
 
     return (
@@ -91,8 +97,17 @@ const UserForm = () => {
                     <input type="text" name="name" placeholder="Nombre" value={formData.name} onChange={handleChange} />
                     {errors.name && <span className="error">{errors.name}</span>}
                 </div>
-
                 <div className="form-group">
+                    <select name="gender" value={formData.gender} onChange={handleChange}>
+                        <option value="">Selecciona genero</option>
+                        {gender.map((gend, index) => (
+                            <option key={index} value={gend}> {gend} </option>
+                        ))}
+                    </select>
+                    {errors.gender && <span className="error">{errors.gender}</span>}
+                </div>
+                <div className="form-group">
+
                     <input type="text" name="tel" placeholder="Telefono" value={formData.tel} onChange={handleChange} />
                     {errors.tel && <span className="error">{errors.tel}</span>}
                 </div>
