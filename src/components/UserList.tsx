@@ -23,6 +23,7 @@ const UserList = () => {
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
+                                <th>Genero</th>
                                 <th>Teléfono</th>
                                 <th>Email</th>
                                 <th>Profesión</th>
@@ -34,6 +35,7 @@ const UserList = () => {
                                 <tr key={index}>
                                     <td>{index + 1}</td>
                                     <td>{user.name}</td>
+                                    <td>{user.gender}</td>
                                     <td>{user.tel}</td>
                                     <td>{user.email}</td>
                                     <td>{user.career}</td>
